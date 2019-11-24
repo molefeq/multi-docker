@@ -1,0 +1,32 @@
+{
+    "AWSEBDockerrunversion": 2,
+    "containerDefinitions": [{
+        "name": "client",
+        "image": "molefeq/multi-client",
+        "hostname": "client",
+        "essential": false
+    }, {
+        "name": "server",
+        "image": "molefeq/multi-server",
+        "hostname": "api",
+        "essential": false
+    }, {
+        "name": "worker",
+        "image": "molefeq/multi-worker",
+        "hostname": "worker",
+        "essential": false
+    }, {
+        "name": "nginx",
+        "image": "molefeq/multi-nginx",
+        "hostname": "nginx",
+        "essential": true,
+        "portMappings": [{
+            "hostPort": 80,
+            "containerPort": 80
+        }],
+        "links": [
+            "client",
+            "server"
+        ]
+    }]
+}
