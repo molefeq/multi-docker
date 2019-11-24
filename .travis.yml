@@ -1,0 +1,24 @@
+sudo: required
+language: generic
+services:
+  - docker
+
+before_install:
+  - docker build -t molefeq/react-test -f ./client/Dockerfile.dev ./client
+
+
+script:
+  - docker run -e CI=true molefeq/react-test npm run test
+
+after_success:
+  - docker build -t molefeq/multi-client ./client
+  - docker build -t molefeq/multi-worker ./worker
+  - docker build -t molefeq/multi-nginx ./nginx
+  - docker build -t molefeq/multi-server ./server
+  # Log in to the docker cli
+  -echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  # Take those images and push them o docker hub
+  - docker push molefeq/multi-client
+  - docker push molefeq/multi-worker
+  - docker push molefeq/multi-nginx
+  - docker push molefeq/multi-server
