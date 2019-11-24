@@ -22,3 +22,4 @@ after_success:
   - docker push molefeq/multi-worker
   - docker push molefeq/multi-nginx
   - docker push molefeq/multi-server
+  
