@@ -16,10 +16,9 @@ after_success:
   - docker build -t molefeq/multi-nginx ./nginx
   - docker build -t molefeq/multi-server ./server
   # Log in to the docker cli
-  -echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   # Take those images and push them o docker hub
   - docker push molefeq/multi-client
   - docker push molefeq/multi-worker
   - docker push molefeq/multi-nginx
   - docker push molefeq/multi-server
-  
